@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   description: 'Developer, builder, and creator of Masterspred. Serious work, eventually.',
   metadataBase: new URL('https://faruq.tech'),
   alternates: { canonical: '/' },
-  icons: { icon: '/faruq-logo.jpeg', apple: '/faruq-logo.jpeg' },
+  icons: { icon: { url: '/faruq-logo.png', type: 'image/png' }, apple: '/faruq-logo.png' },
   openGraph: {
     title: 'Faruq Etamesor — Developer & Builder',
     description: 'Developer, builder, and creator of Masterspred. Serious work, eventually.',
     url: 'https://faruq.tech',
-    images: [{ url: '/faruq-logo.jpeg', width: 1280, height: 1280, alt: 'Faruq logo' }],
+    images: [{ url: '/faruq-logo.png', width: 1254, height: 1254, alt: 'Faruq logo' }],
   },
 };
 

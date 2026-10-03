@@ -127,7 +127,7 @@ export function PortfolioOutro() {
         </DialogContent>
       </Dialog>
 
-      <div className="footer-bottom"><span className="footer-signature"><Image className="footer-logo" src="/faruq-logo.jpeg" width={128} height={128} alt="Faruq" />Faruq Etamesor © 2026</span><a href="#top">Back to chaos ↑</a></div>
+      <div className="footer-bottom"><span className="footer-signature"><Image className="footer-logo" src="/faruq-logo.png" width={128} height={128} alt="Faruq" />Faruq Etamesor © 2026</span><a href="#top">Back to chaos ↑</a></div>
     </footer>
   );
 }

@@ -106,7 +106,7 @@ export default function Home() {
       <motion.div className="scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
       <header className="topline">
-        <a href="#top" className="monogram" aria-label="Faruq Etamesor, home"><Image className="brand-logo" src="/faruq-logo.jpeg" width={128} height={128} alt="Faruq" priority /></a>
+        <a href="#top" className="monogram" aria-label="Faruq Etamesor, home"><Image className="brand-logo" src="/faruq-logo.png" width={128} height={128} alt="Faruq" priority /></a>
         <p>Developer / builder / occasional bug creator</p>
         <a href="#masterspred">Selected work ↘</a>
       </header>
@@ -160,14 +160,14 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
-        <div className="mum-line reveal"><span>Unfortunately, my mum still isn&apos;t impressed.</span><strong>Can you do me a favour?</strong><span>Pull the light bulb under this text. Plssss. 💡</span></div>
+        <div className="mum-line reveal"><span>Unfortunately, my mum still isn&apos;t impressed.</span><strong>Can you do me a favour?</strong><span>Tap the switch or pull the cord below. Plssss. 💡</span></div>
       </section>
 
       <section className="bulb-section" aria-labelledby="bulb-title">
         <div className="bulb-copy reveal">
           <p className="eyebrow">Career visibility controls</p>
           <h2 id="bulb-title">Let there be <span>proof.</span></h2>
-          <p>Pull the cord or tap the bulb. Keep scrolling whenever you&apos;re ready.</p>
+          <p id="bulb-help">Tap the button or pull the cord to switch the light. Keep scrolling whenever you&apos;re ready.</p>
         </div>
         <LightBulb lit={lit} onToggle={() => setLit((value) => !value)} />
       </section>
