@@ -16,7 +16,7 @@ import { SiJavascript, SiNextdotjs, SiPostgresql, SiPython, SiReact, SiSupabase,
 
 gsap.registerPlugin(ScrollTrigger);
 
-const headline = 'OH HEY, A HUMAN.'.split('');
+const headline = ['OH', 'HEY,', 'A', 'HUMAN.'];
 const languages = [
   { name: 'TypeScript', level: 'fluent', icon: SiTypescript },
   { name: 'JavaScript', level: "it's complicated", icon: SiJavascript },
@@ -72,7 +72,7 @@ export default function Home() {
   const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 28, restDelta: 0.001 });
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || window.matchMedia('(pointer: coarse)').matches) return;
     let split: SplitType | undefined;
     const context = gsap.context(() => {
       gsap.utils.toArray<HTMLElement>('.reveal').forEach((element) => {
@@ -106,7 +106,7 @@ export default function Home() {
       <motion.div className="scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
       <header className="topline">
-        <a href="#top" className="monogram" aria-label="Faruq Etamesor, home">FE<span>®</span></a>
+        <a href="#top" className="monogram" aria-label="Faruq Etamesor, home"><Image className="brand-logo" src="/faruq-logo.jpeg" width={128} height={128} alt="Faruq" priority /></a>
         <p>Developer / builder / occasional bug creator</p>
         <a href="#masterspred">Selected work ↘</a>
       </header>
@@ -114,14 +114,10 @@ export default function Home() {
       <section id="top" className="hero-section" aria-labelledby="hero-title">
         <p className="eyebrow">Hello from Lagos · 03:47 AM-ish</p>
         <h1 id="hero-title" className="hero-title" aria-label="Oh hey, a human.">
-          {headline.map((letter, index) => (
-            <span className="letter-mask" key={`${letter}-${index}`}>
-              <motion.span
-                initial={reduced ? false : { y: '110%', filter: 'blur(10px)' }}
-                animate={{ y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.7, delay: 0.12 + index * 0.035, ease: [0.22, 1, 0.36, 1] }}
-              >{letter === ' ' ? '\u00A0' : letter}</motion.span>
-            </span>
+          {headline.map((word) => (
+            <span className="hero-word" key={word} aria-hidden="true">{word.split('').map((letter, index) => (
+              <span className="letter-mask" key={`${word}-${index}`}><span>{letter}</span></span>
+            ))}</span>
           ))}
         </h1>
         <motion.div className="hero-copy" initial={reduced ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.05, duration: 0.7 }}>
@@ -171,18 +167,36 @@ export default function Home() {
         <div className="bulb-copy reveal">
           <p className="eyebrow">Career visibility controls</p>
           <h2 id="bulb-title">Let there be <span>proof.</span></h2>
-          <p>Drag the pull cord down, then let go. Click works too. We&apos;re inclusive.</p>
+          <p>Pull the cord or tap the bulb. Keep scrolling whenever you&apos;re ready.</p>
         </div>
         <LightBulb lit={lit} onToggle={() => setLit((value) => !value)} />
       </section>
 
-      <section className="serious-transition section-pad">
+      <section id="after-light" className="serious-transition section-pad">
         <h2 className="serious-heading">ALRIGHT, ENOUGH OF THE JOKES.</h2>
         <p className="reveal">I&apos;m serious now.</p>
       </section>
 
       <section className="story-section section-pad" aria-labelledby="story-title">
-        <div className="section-index">02 / Origin story</div>
+        <div className="story-rail">
+          <div className="section-index">02 / Origin story</div>
+          <figure className="portrait-frame reveal">
+            <div className="portrait-image-wrap">
+              <Image
+                className="portrait-image"
+                src="/faruq-portrait.jpeg"
+                width={960}
+                height={1280}
+                sizes="(max-width: 760px) calc(100vw - 2.5rem), 28vw"
+                alt="Faruq Etamesor taking a mirror portrait"
+              />
+            </div>
+            <figcaption>
+              <span>Faruq Etamesor</span>
+              <span>Builder, apparently.</span>
+            </figcaption>
+          </figure>
+        </div>
         <h2 id="story-title" className="sr-only">Faruq&apos;s story</h2>
         <div className="story-copy">
           <p className="reveal lead">I&apos;m Faruq Etamesor, a developer and builder with a particular obsession with sports, technology and entertainment.</p>

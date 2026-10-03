@@ -15,7 +15,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Faruq Etamesor — Developer & Builder',
   description: 'Developer, builder, and creator of Masterspred. Serious work, eventually.',
-  icons: { icon: '/favicon.svg' },
+  metadataBase: new URL('https://faruq.tech'),
+  alternates: { canonical: '/' },
+  icons: { icon: '/faruq-logo.jpeg', apple: '/faruq-logo.jpeg' },
+  openGraph: {
+    title: 'Faruq Etamesor — Developer & Builder',
+    description: 'Developer, builder, and creator of Masterspred. Serious work, eventually.',
+    url: 'https://faruq.tech',
+    images: [{ url: '/faruq-logo.jpeg', width: 1280, height: 1280, alt: 'Faruq logo' }],
+  },
 };
 
 export default function RootLayout({

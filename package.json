@@ -1,5 +1,5 @@
 {
-  "name": "sites-project",
+  "name": "sebby-portfolio",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -7,8 +7,8 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "build": "vinext build",
-    "start": "wrangler dev --config dist/server/wrangler.json",
+    "build": "node scripts/build.mjs",
+    "start": "vinext start",
     "lint": "oxlint",
     "format": "oxfmt"
   },

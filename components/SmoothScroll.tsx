@@ -9,7 +9,7 @@ export function SmoothScroll() {
   const reduced = useReducedMotion();
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || window.matchMedia('(pointer: coarse)').matches) return;
     const lenis = new Lenis({ duration: 1.08, smoothWheel: true, touchMultiplier: 1.15 });
     const tick = (time: number) => lenis.raf(time * 1000);
     lenis.on('scroll', () => window.dispatchEvent(new Event('portfolio-scroll')));

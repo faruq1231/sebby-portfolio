@@ -7,6 +7,7 @@ import { AnimatePresence, motion, stagger } from 'framer-motion';
 import { Coffee, Mail } from 'lucide-react';
 import { SiGithub, SiX } from 'react-icons/si';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export const BUY_ME_A_COFFEE_URL = '#';
 
@@ -126,7 +127,7 @@ export function PortfolioOutro() {
         </DialogContent>
       </Dialog>
 
-      <div className="footer-bottom"><span>Faruq Etamesor © 2026</span><a href="#top">Back to chaos ↑</a></div>
+      <div className="footer-bottom"><span className="footer-signature"><Image className="footer-logo" src="/faruq-logo.jpeg" width={128} height={128} alt="Faruq" />Faruq Etamesor © 2026</span><a href="#top">Back to chaos ↑</a></div>
     </footer>
   );
 }

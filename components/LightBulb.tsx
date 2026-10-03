@@ -1,7 +1,7 @@
 'use client';
 
 import { animate, motion, useMotionValue, useSpring } from 'framer-motion';
-import { Lightbulb } from 'lucide-react';
+import { ArrowDown, Lightbulb } from 'lucide-react';
 import { PointerEvent, useRef, useState } from 'react';
 
 type LightBulbProps = { lit: boolean; onToggle: () => void };
@@ -14,6 +14,9 @@ export function LightBulb({ lit, onToggle }: LightBulbProps) {
   const [active, setActive] = useState(false);
 
   const begin = (event: PointerEvent<HTMLButtonElement>) => {
+    dragged.current = false;
+    // Phones keep native scrolling; the bulb toggles with a normal tap.
+    if (event.pointerType !== 'mouse') return;
     event.currentTarget.setPointerCapture(event.pointerId);
     start.current = event.clientY;
     dragged.current = false;
@@ -35,6 +38,11 @@ export function LightBulb({ lit, onToggle }: LightBulbProps) {
     animate(pull, 0, { type: 'spring', stiffness: 280, damping: 14 });
   };
 
+  const cancel = () => {
+    setActive(false);
+    animate(pull, 0, { type: 'spring', stiffness: 280, damping: 14 });
+  };
+
   return (
     <div className="bulb-stage">
       <button
@@ -43,8 +51,8 @@ export function LightBulb({ lit, onToggle }: LightBulbProps) {
         onPointerDown={begin}
         onPointerMove={move}
         onPointerUp={release}
-        onPointerCancel={release}
-        onClick={() => { if (!dragged.current) onToggle(); }}
+        onPointerCancel={cancel}
+        onClick={(event) => { if (event.detail === 0 || !dragged.current) onToggle(); dragged.current = false; }}
         aria-pressed={lit}
         aria-label={lit ? 'Turn the portfolio light off' : 'Turn the portfolio light on'}
       >
@@ -68,6 +76,15 @@ export function LightBulb({ lit, onToggle }: LightBulbProps) {
         animate={{ opacity: lit ? 1 : 0, y: lit ? 0 : 12 }}
         aria-live="polite"
       >Thanks. My mum can see my career now.</motion.p>
+      <motion.a
+        className="continue-after-light"
+        href="#after-light"
+        initial={false}
+        animate={{ opacity: lit ? 1 : 0, y: lit ? 0 : 10 }}
+        tabIndex={lit ? 0 : -1}
+        aria-hidden={!lit}
+        style={{ pointerEvents: lit ? 'auto' : 'none' }}
+      >Continue <ArrowDown size={15} aria-hidden="true" /></motion.a>
     </div>
   );
 }

@@ -6,7 +6,7 @@ export function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const query = window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)');
     const update = () => setReduced(query.matches);
     update();
     query.addEventListener('change', update);
