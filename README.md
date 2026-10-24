@@ -1,6 +1,6 @@
 # Faruq portfolio
 
-Source for the portfolio at [faruq.tech](https://faruq.tech), built with React, TypeScript, and Vinext. The design uses the supplied Faruq logo with a black, ivory, and warm grey palette, responsive layouts, accessible controls, and reduced-motion support.
+Source for the portfolio at [faruq.tech](https://faruq.tech), built with React, TypeScript, and Vinext. The Build Journal design pairs warm ivory and ink with editorial serif typography, the supplied transparent Faruq logo, responsive layouts, and an optional tap-or-pull light interaction.
 
 ## Local development
 
@@ -30,6 +30,7 @@ The deployable output is `dist/client`. `scripts/build.mjs` checks for a complet
 | `public/faruq-logo.png` | Transparent logo used by the site and favicon |
 | `public/faruq-portrait.jpeg` | Portrait |
 | `public/masterspred-showcase.webp` | Project showcase image |
+| `public/easygrab-logo.svg` | EasyGrab branding for the in-development project feature |
 
 Files in `public` are served from the site root. Rebuild after changing source files or assets.
 

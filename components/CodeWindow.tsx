@@ -15,7 +15,7 @@ const code = [
   <>&nbsp;&nbsp;&nbsp;&nbsp;{quoted('Building things people actually use')}</>,
   <>&nbsp;&nbsp;],</>,
   <>&nbsp;</>,
-  <>&nbsp;&nbsp;currentlyBuilding: {quoted('Masterspred')},</>,
+  <>&nbsp;&nbsp;currentlyBuilding: [{quoted('Masterspred')}, {quoted('EasyGrab')}],</>,
   <>&nbsp;&nbsp;status: {quoted('probably debugging something')}</>,
   <>{'}'};</>,
 ];

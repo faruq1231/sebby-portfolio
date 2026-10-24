@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Faruq Etamesor — Developer & Builder',
-  description: 'Developer, builder, and creator of Masterspred. Serious work, eventually.',
+  description: 'The Build Journal of Faruq Etamesor. Developer and builder behind Masterspred and EasyGrab. Good ideas deserve great code.',
   metadataBase: new URL('https://faruq.tech'),
   alternates: { canonical: '/' },
   icons: { icon: { url: '/faruq-logo.png', type: 'image/png' }, apple: '/faruq-logo.png' },
   openGraph: {
     title: 'Faruq Etamesor — Developer & Builder',
-    description: 'Developer, builder, and creator of Masterspred. Serious work, eventually.',
+    description: 'The Build Journal of Faruq Etamesor. Good ideas deserve great code.',
     url: 'https://faruq.tech',
     images: [{ url: '/faruq-logo.png', width: 1254, height: 1254, alt: 'Faruq logo' }],
   },
