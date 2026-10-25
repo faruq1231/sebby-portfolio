@@ -4,6 +4,9 @@ import { CodeWindow } from '@/components/CodeWindow';
 import { LightBulb } from '@/components/LightBulb';
 import { HeroStamp } from '@/components/HeroStamp';
 import { AnimatedName } from '@/components/AnimatedName';
+import { NameIntro } from '@/components/NameIntro';
+import { ImageReveal } from '@/components/ImageReveal';
+import { RevealText } from '@/components/RevealText';
 import { PortfolioOutro } from '@/components/PortfolioOutro';
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Database, Gauge, Landmark, ServerCog, WalletCards } from 'lucide-react';
@@ -59,6 +62,7 @@ function GithubGraph() {
 
 export default function Home() {
   const [lit, setLit] = useState(false);
+  const [introVersion, setIntroVersion] = useState(0);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 28, restDelta: 0.001 });
@@ -67,6 +71,7 @@ export default function Home() {
 
   return (
     <div className={lit ? 'journal is-lit' : 'journal'}>
+      <NameIntro key={introVersion} />
       <a className="skip-link" href="#masterspred">Skip to the work</a>
       <motion.div className="scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
       <header className="journal-header journal-container">
@@ -78,52 +83,60 @@ export default function Home() {
       <main>
 
       <section id="top" className="journal-hero journal-container" aria-labelledby="hero-title">
-        <motion.div className="hero-eyebrow" initial={from} animate={enter} transition={{ duration: .65 }}><span>The Build Journal</span><span>Lagos, NG</span></motion.div>
+        <motion.div className="hero-eyebrow" initial={from} animate={enter} transition={{ duration: .65, delay: reduced ? 0 : 2.25 }}><span>The Build Journal</span><span>Lagos, NG</span></motion.div>
         <div className="hero-main">
-          <h1 id="hero-title" className="hero-title"><motion.span className="hero-line" initial={from} animate={enter} transition={{ duration: .8, delay: .1 }}>Good ideas</motion.span><motion.span className="hero-line" initial={from} animate={enter} transition={{ duration: .8, delay: .25 }}>deserve <em>great code.</em></motion.span></h1>
-          <HeroStamp />
+          <div className="hero-portrait-column">
+            <motion.figure className="hero-portrait-card" initial={reduced ? false : { opacity: 0, y: 45, rotate: -7, clipPath: 'inset(0 0 100% 0)' }} animate={{ opacity: 1, y: 0, rotate: -3, clipPath: 'inset(-10% -10% -10% -10%)' }} transition={{ duration: 1.15, delay: reduced ? 0 : 2.25, ease: [.16, 1, .3, 1] }}>
+              <Image className="hero-portrait" src="/faruq-portrait.jpeg" width={960} height={1280} sizes="(max-width: 760px) 75vw, 36vw" alt="Faruq Etamesor taking a mirror portrait" priority />
+              <figcaption><span>Faruq Etamesor</span><span>Builder, apparently.</span></figcaption>
+            </motion.figure>
+          </div>
+          <div className="hero-copy">
+            <h1 id="hero-title" className="hero-title" aria-label="Good ideas deserve great code."><RevealText intro delay={2.35}>Good ideas</RevealText><RevealText intro delay={2.47}>deserve</RevealText><RevealText intro delay={2.59}><em>great code.</em></RevealText></h1>
+            <motion.div className="hero-support" initial={from} animate={enter} transition={{ duration: .75, delay: reduced ? 0 : 2.85 }}><p className="hero-description">A developer turning ideas into useful products. Serious work, a little personality.</p><a className="hero-scroll" href="#masterspred" aria-label="Explore selected work"><ArrowDown size={22} strokeWidth={1.3} aria-hidden="true" /></a></motion.div>
+          </div>
         </div>
         <div className="hero-lower">
-          <div className="hero-identity"><p className="hero-name">I&apos;m <AnimatedName /></p><p className="hero-alias">Call me <em>Sebby.</em></p></div>
-          <p className="hero-description">A developer turning ideas into useful products. Serious work, a little personality.</p>
-          <a className="hero-scroll" href="#masterspred" aria-label="Explore selected work"><ArrowDown size={22} strokeWidth={1.3} aria-hidden="true" /></a>
+          <div className="hero-identity"><p className="hero-name">I&apos;m <AnimatedName onReplay={() => setIntroVersion(value => value + 1)} /></p><p className="hero-alias">Call me <em>Sebby.</em></p></div>
+          <p className="hero-edition">From idea to something real.</p>
+          <div className="hero-sticker"><HeroStamp /></div>
         </div>
       </section>
 
       <section id="masterspred" className="work-chapter journal-container" aria-labelledby="master-title">
-        <div className="chapter-heading work-heading"><p className="chapter-index">01 / The work</p><h2 id="master-title" className="chapter-title work-title">A few things<br /><em>I&apos;ve been building.</em></h2></div>
+        <div className="chapter-heading work-heading"><p className="chapter-index">01 / The work</p><h2 id="master-title" className="chapter-title work-title"><RevealText>A few things</RevealText><RevealText delay={.1}><em>I&apos;ve been building.</em></RevealText></h2></div>
         <motion.article className="project-feature" aria-labelledby="project-title" initial={from} whileInView={enter} viewport={{ once: true, amount: .12 }} transition={{ duration: .75 }}>
           <div className="project-copy">
             <p className="project-number">01 / Masterspred</p>
-            <h3 id="project-title" className="project-heading">Building a place<br /><em>for the game.</em></h3>
+            <h3 id="project-title" className="project-heading"><RevealText>Building a place</RevealText><RevealText delay={.1}><em>for the game.</em></RevealText></h3>
             <p className="project-description">A sports prediction community. Built from the frontend to the wallet.</p>
             <p className="project-role">Product & full-stack development</p>
             <a className="project-link" href="https://masterspred.vercel.app" target="_blank" rel="noreferrer">Visit the live product <ArrowUpRight size={18} aria-hidden="true" /></a>
           </div>
-          <div className="project-preview">
-            <motion.div className="device-float" animate={reduced ? undefined : { y: [0, -9, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}><a className="project-device" href="https://masterspred.vercel.app" target="_blank" rel="noreferrer" aria-label="Open the live Masterspred website"><Image src="/masterspred-showcase.webp" width={910} height={1455} sizes="(max-width: 760px) 65vw, 28vw" alt="Masterspred community home screen showing a football prediction card" /></a></motion.div>
-          </div>
+          <ImageReveal className="project-preview" delay={.1}>
+            <div className="device-float"><a className="project-device" href="https://masterspred.vercel.app" target="_blank" rel="noreferrer" aria-label="Open the live Masterspred website"><Image src="/masterspred-showcase.webp" width={910} height={1455} sizes="(max-width: 760px) 65vw, 28vw" alt="Masterspred community home screen showing a football prediction card" /></a></div>
+          </ImageReveal>
         </motion.article>
         <details className="project-details engineering-details"><summary>Under the hood</summary><div className="stack-strip" aria-label="Masterspred technology stack">{stack.map(({ name, icon: Icon }) => <span key={name}><Icon size={16} aria-hidden="true" />{name}</span>)}</div><div className="engineering-grid">{engineering.map(({ icon: Icon, title, description }, index) => <article className="engineering-item" key={title}><div><span>0{index + 1}</span><Icon size={23} strokeWidth={1.3} aria-hidden="true" /></div><h3>{title}</h3><p>{description}</p></article>)}</div><div className="evidence-heading"><p className="chapter-index">Notes from the stress test</p></div><div className="evidence-grid">{evidence.map(test => <article className="evidence-item" key={test.value}><span className="evidence-value">{test.value}</span><h3>{test.label}</h3><p>{test.detail}</p>{test.extra && <p>{test.extra}</p>}</article>)}</div><p className="footnote">Cached community endpoint tests; results don&apos;t represent the entire application.</p></details>
         <motion.article id="easygrab" className="project-feature project-in-progress" aria-labelledby="easygrab-title" initial={from} whileInView={enter} viewport={{ once: true, amount: .12 }} transition={{ duration: .75 }}>
           <div className="project-copy">
             <p className="project-number">02 / EasyGrab</p>
             <span className="project-status">In development</span>
-            <h3 id="easygrab-title" className="project-heading">Your campus,<br /><em>within reach.</em></h3>
+            <h3 id="easygrab-title" className="project-heading"><RevealText>Your campus,</RevealText><RevealText delay={.1}><em>within reach.</em></RevealText></h3>
             <p className="project-description">A marketplace bringing Edo State University students and local sellers together.</p>
             <p className="project-role">Currently building · Product & full-stack</p>
             <a className="project-link" href="https://easygrab-opal.vercel.app/" target="_blank" rel="noreferrer">Explore the work in progress <ArrowUpRight size={18} aria-hidden="true" /></a>
           </div>
-          <div className="project-preview">
-            <motion.div className="project-placeholder" animate={reduced ? undefined : { y: [0, -7, 0], rotate: [-2, 1, -2] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}><Image src="/easygrab-mark.svg" width={64} height={64} alt="" aria-hidden="true" /><Image src="/easygrab-logo.svg" width={236} height={64} alt="EasyGrab" /><p>Your campus,<br /><em>within reach.</em></p></motion.div>
-          </div>
+          <ImageReveal className="project-preview" delay={.1}>
+            <div className="project-placeholder"><Image src="/easygrab-mark.svg" width={64} height={64} alt="" aria-hidden="true" /><Image src="/easygrab-logo.svg" width={236} height={64} alt="EasyGrab" /><p>Your campus,<br /><em>within reach.</em></p></div>
+          </ImageReveal>
         </motion.article>
       </section>
 
       <section id="about" className="about-chapter journal-container" aria-labelledby="about-title">
-        <div className="chapter-heading"><p className="chapter-index">02 / The person</p><h2 id="about-title" className="chapter-title">Behind<br /><em>the build.</em></h2></div>
+        <div className="chapter-heading"><p className="chapter-index">02 / The person</p><h2 id="about-title" className="chapter-title"><RevealText>Behind</RevealText><RevealText delay={.1}><em>the build.</em></RevealText></h2></div>
         <motion.div className="about-grid" initial={from} whileInView={enter} viewport={{ once: true, amount: .1 }} transition={{ duration: .7 }}>
-          <figure className="portrait-frame"><div className="portrait-image-wrap"><Image className="portrait-image" src="/faruq-portrait.jpeg" width={960} height={1280} sizes="(max-width: 760px) 85vw, 32vw" alt="Faruq Etamesor taking a mirror portrait" /></div><figcaption><span>Faruq Etamesor</span><span>Builder, apparently.</span></figcaption></figure>
+          <figure className="portrait-frame"><ImageReveal className="portrait-image-wrap"><Image className="portrait-image" src="/faruq-portrait.jpeg" width={960} height={1280} sizes="(max-width: 760px) 85vw, 32vw" alt="Faruq Etamesor taking a mirror portrait" /></ImageReveal><figcaption><span>Faruq Etamesor</span><span>Builder, apparently.</span></figcaption></figure>
           <div className="about-copy"><p className="about-lead">Sports, technology, and turning “what if” into something real.</p><p>I&apos;m the builder behind Masterspred and, currently, <a href="#easygrab">EasyGrab</a>. I work across the interface, the backend, and everything in between.</p><p className="identity-note">What do I do?<br /><em>Honestly? Nothing.</em><br /><span>Apart from all this.</span></p><div className="language-chips" aria-label="Languages I work with">{languages.map(({ name, icon: Icon }) => <span key={name}><Icon size={15} aria-hidden="true" />{name}</span>)}</div></div>
         </motion.div>
       </section>
