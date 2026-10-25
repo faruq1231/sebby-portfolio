@@ -3,6 +3,7 @@
 import { CodeWindow } from '@/components/CodeWindow';
 import { LightBulb } from '@/components/LightBulb';
 import { HeroStamp } from '@/components/HeroStamp';
+import { AnimatedName } from '@/components/AnimatedName';
 import { PortfolioOutro } from '@/components/PortfolioOutro';
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Database, Gauge, Landmark, ServerCog, WalletCards } from 'lucide-react';
@@ -83,7 +84,7 @@ export default function Home() {
           <HeroStamp />
         </div>
         <div className="hero-lower">
-          <div className="hero-identity"><p>I&apos;m Faruq.<br />Call me <em>Sebby.</em></p></div>
+          <div className="hero-identity"><p className="hero-name">I&apos;m <AnimatedName /></p><p className="hero-alias">Call me <em>Sebby.</em></p></div>
           <p className="hero-description">A developer turning ideas into useful products. Serious work, a little personality.</p>
           <a className="hero-scroll" href="#masterspred" aria-label="Explore selected work"><ArrowDown size={22} strokeWidth={1.3} aria-hidden="true" /></a>
         </div>
