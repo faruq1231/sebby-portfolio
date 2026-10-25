@@ -323,6 +323,7 @@ button.contribution { cursor: help; }
   .project-copy { padding: 2.5rem; }
   .project-preview { padding: 3rem 2rem 2rem; }
   .project-device { max-width: 15rem; max-height: 29rem; }
+  .device-float { width: min(100%, 15rem); }
   .project-number { margin-bottom: 1.75rem; }
   .engineering-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
   .evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 3rem; }
@@ -355,6 +356,7 @@ button.contribution { cursor: help; }
   .hero-lower { grid-template-columns: minmax(0, 1fr) 150px; align-items: center; gap: 1.25rem .75rem; margin-top: 2rem; }
   .hero-identity { min-width: 0; width: auto; font-size: .8rem; }
   .hero-identity .hero-name { flex-wrap: wrap; gap: .15rem .5rem; }
+  .hero-identity .animated-name { min-height: 56px; font-size: clamp(2rem, 10vw, 3rem); }
   .hero-lower > .hero-edition { grid-column: 1 / -1; grid-row: 2; justify-self: start; max-width: none; text-align: left; }
   .hero-edition { font-size: .65rem; }
   .hero-scroll { font-size: .75rem; }
