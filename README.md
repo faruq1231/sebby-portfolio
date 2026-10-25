@@ -27,6 +27,7 @@ The deployable output is `dist/client`. `scripts/build.mjs` checks for a complet
 | `app/globals.css` | Palette, spacing, responsive layouts, and visual styles |
 | `app/layout.tsx` | Page title, description, metadata, and fonts |
 | `components/PortfolioOutro.tsx` | Closing section and contact links |
+| `components/HeroStamp.tsx` | Draggable logo, tap-to-spin, and keyboard rotation |
 | `public/faruq-logo.png` | Transparent logo used by the site and favicon |
 | `public/faruq-portrait.jpeg` | Portrait |
 | `public/masterspred-showcase.webp` | Project showcase image |

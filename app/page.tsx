@@ -2,6 +2,7 @@
 
 import { CodeWindow } from '@/components/CodeWindow';
 import { LightBulb } from '@/components/LightBulb';
+import { HeroStamp } from '@/components/HeroStamp';
 import { PortfolioOutro } from '@/components/PortfolioOutro';
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Database, Gauge, Landmark, ServerCog, WalletCards } from 'lucide-react';
@@ -79,7 +80,7 @@ export default function Home() {
         <motion.div className="hero-eyebrow" initial={from} animate={enter} transition={{ duration: .65 }}><span>The Build Journal</span><span>Lagos, NG</span></motion.div>
         <div className="hero-main">
           <h1 id="hero-title" className="hero-title"><motion.span className="hero-line" initial={from} animate={enter} transition={{ duration: .8, delay: .1 }}>Good ideas</motion.span><motion.span className="hero-line" initial={from} animate={enter} transition={{ duration: .8, delay: .25 }}>deserve <em>great code.</em></motion.span></h1>
-          <motion.div className="hero-stamp" aria-hidden="true" initial={reduced ? false : { opacity: 0, scale: .85, rotate: -12 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ duration: 1.2, delay: .2, type: 'spring', bounce: .2 }}><div className="stamp-ring"><span>Build</span><span>Learn</span><span>Repeat</span></div><Image className="brand-stamp" src="/faruq-logo.png" width={300} height={300} alt="" priority /><span className="stamp-caption">A little curiosity goes a long way.</span></motion.div>
+          <HeroStamp />
         </div>
         <div className="hero-lower">
           <div className="hero-identity"><p>I&apos;m Faruq.<br />Call me <em>Sebby.</em></p></div>
