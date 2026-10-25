@@ -12,6 +12,7 @@ type SpinGesture = {
   x: number;
   y: number;
   time: number;
+  startedAt: number;
   velocity: number;
   distance: number;
   useAngle: boolean;
@@ -25,6 +26,7 @@ export function HeroStamp() {
   const reduced = useReducedMotion();
   const gesture = useRef<SpinGesture | null>(null);
   const dragged = useRef(false);
+  const tapAllowed = useRef(false);
   const [dragging, setDragging] = useState(false);
 
   const begin = (event: PointerEvent<HTMLButtonElement>) => {
@@ -40,10 +42,12 @@ export function HeroStamp() {
       pointer: event.pointerId, centerX, centerY,
       angle: degrees(event.clientX, event.clientY, centerX, centerY),
       x: event.clientX, y: event.clientY, time: event.timeStamp,
+      startedAt: event.timeStamp,
       velocity: 0, distance: 0,
       useAngle: Math.hypot(event.clientX - centerX, event.clientY - centerY) > bounds.width * .18,
     };
     dragged.current = false;
+    tapAllowed.current = false;
     setDragging(true);
   };
 
@@ -68,6 +72,7 @@ export function HeroStamp() {
     if (!current || current.pointer !== event.pointerId) return;
     gesture.current = null;
     setDragging(false);
+    tapAllowed.current = !dragged.current && event.timeStamp - current.startedAt < 300;
     if (dragged.current && !reduced) {
       const releaseVelocity = current.velocity * Math.exp(-(event.timeStamp - current.time) / 120);
       const momentum = Math.max(-720, Math.min(720, releaseVelocity * 260));
@@ -78,6 +83,7 @@ export function HeroStamp() {
   const cancel = () => {
     gesture.current = null;
     dragged.current = true;
+    tapAllowed.current = false;
     setDragging(false);
   };
 
@@ -90,14 +96,15 @@ export function HeroStamp() {
     <motion.div className="hero-stamp" initial={reduced ? false : { opacity: 0, scale: .85, rotate: -12 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ duration: 1.2, delay: .2, type: 'spring', bounce: .2 }}>
       <motion.button
         type="button"
-        className={dragging ? 'stamp-turntable is-spinning' : 'stamp-turntable'}
+        className={dragging ? 'stamp-turntable is-held' : 'stamp-turntable'}
         style={{ rotate: rotation }}
         onPointerDown={begin}
         onPointerMove={move}
         onPointerUp={release}
         onPointerCancel={cancel}
         onLostPointerCapture={() => { if (gesture.current) cancel(); }}
-        onClick={event => { if (event.detail === 0 || !dragged.current) spin(); dragged.current = false; }}
+        onClick={event => { if (event.detail === 0 || tapAllowed.current) spin(); tapAllowed.current = false; }}
+        onContextMenu={event => event.preventDefault()}
         onKeyDown={event => {
           if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
           event.preventDefault();
@@ -110,7 +117,7 @@ export function HeroStamp() {
         <div className="stamp-ring" aria-hidden="true"><span>Build</span><span>Learn</span><span>Repeat</span></div>
         <Image className="brand-stamp" src="/faruq-logo.png" width={300} height={300} alt="" aria-hidden="true" priority draggable={false} />
       </motion.button>
-      <span id="stamp-hint" className="stamp-caption">Drag or tap to spin.</span>
+      <span id="stamp-hint" className="stamp-caption">Drag or tap to spin. Hold to pause.</span>
     </motion.div>
   );
 }

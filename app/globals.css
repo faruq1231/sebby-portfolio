@@ -50,11 +50,12 @@ h1, h2, h3, p { margin-top: 0; }
 .hero-main .hero-title { font-size: clamp(3.4rem, 7.6vw, 7rem); }
 .hero-line { display: block; }
 .hero-stamp { position: relative; display: grid; place-items: center; justify-self: end; width: min(100%, 20rem); aspect-ratio: 1; border: 1px solid var(--line); border-radius: 50%; background: #e6e4d9; }
-.stamp-turntable { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 50%; color: inherit; background: transparent; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
-.stamp-turntable.is-spinning, .stamp-turntable:active { cursor: grabbing; }
+.stamp-turntable { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 50%; color: inherit; background: transparent; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.stamp-turntable.is-held, .stamp-turntable:active { cursor: grabbing; }
 .stamp-turntable:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; }
 .stamp-turntable .brand-stamp, .stamp-turntable .stamp-ring { pointer-events: none; }
 .stamp-ring { position: absolute; inset: .75rem; border: 1px solid rgba(37,40,31,.42); border-radius: 50%; animation: stamp-orbit 30s linear infinite; }
+.stamp-turntable.is-held .stamp-ring, .stamp-turntable:active .stamp-ring { animation-play-state: paused; }
 .stamp-ring::before, .stamp-ring::after { content: ''; position: absolute; top: 50%; width: 5px; height: 5px; border-radius: 50%; background: var(--ink); }
 .stamp-ring::before { left: -3px; }
 .stamp-ring::after { right: -3px; }
@@ -64,7 +65,7 @@ h1, h2, h3, p { margin-top: 0; }
 .stamp-ring > span:nth-child(3) { top: 50%; left: 100%; transform: translate(-50%, -50%) rotate(90deg); }
 .stamp-ring svg { display: block; width: 100%; height: 100%; }
 .brand-stamp { width: 54%; height: auto; object-fit: contain; filter: brightness(0); }
-.stamp-caption { position: absolute; left: 50%; bottom: -1.75rem; width: max-content; max-width: 100%; margin: 0; color: var(--muted); font-family: var(--font-geist-mono); font-size: .6rem; line-height: 1.6; letter-spacing: .04em; transform: translateX(-50%); }
+.stamp-caption { position: absolute; left: 50%; bottom: -2.5rem; width: max-content; max-width: 100%; margin: 0; color: var(--muted); font-family: var(--font-geist-mono); font-size: .6rem; line-height: 1.6; letter-spacing: .04em; text-align: center; transform: translateX(-50%); }
 @keyframes stamp-orbit { to { transform: rotate(360deg); } }
 .hero-eyebrow, .eyebrow, .chapter-index, .project-number, .hero-edition, .work-meta, .project-caption, .identity-note { font-family: var(--font-geist-mono); font-size: .7rem; font-weight: 400; line-height: 1.7; letter-spacing: .08em; text-transform: uppercase; }
 .hero-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-bottom: 2rem; color: var(--muted); }
@@ -313,7 +314,7 @@ button.contribution { cursor: help; }
   .hero-main .hero-title { max-width: 100%; font-size: clamp(3rem, 13vw, 5.5rem); }
   .hero-stamp { justify-self: center; width: 190px; margin-block: .5rem 1.5rem; }
   .stamp-ring { inset: .6rem; }
-  .stamp-caption { bottom: -1.6rem; }
+  .stamp-caption { bottom: -2.5rem; }
   .hero-description { flex: 1; max-width: calc(100% - 4.5rem); font-size: 1rem; }
   .hero-lower { flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2.5rem; }
   .hero-identity { width: 100%; font-size: .8rem; }
