@@ -22,11 +22,11 @@ export function PortfolioOutro() {
 
   return (
     <footer id="contact" className="contact-section section-pad" aria-labelledby="contact-title">
-      <p className="eyebrow">05 / A new conversation</p>
-      <h2 id="contact-title">Good things start with a conversation.</h2>
+      <p className="eyebrow">04 / A new conversation</p>
+      <h2 id="contact-title">Got a good idea?</h2>
 
       <div className="outro-sequence">
-        <p>You made it this far. Might as well say hello. Tell me what you&apos;re building, what needs fixing, or what you&apos;re curious about.</p>
+        <p>You made it this far. Might as well say hello.</p>
       </div>
 
       <div className="contact-actions">
