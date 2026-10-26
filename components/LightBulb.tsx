@@ -105,7 +105,7 @@ export function LightBulb({ lit, onToggle }: LightBulbProps) {
       >Thanks. My mum can see my career now.</motion.p>
       <motion.a
         className="continue-after-light"
-        href="#after-light"
+        href="#contact"
         initial={false}
         animate={{ opacity: lit ? 1 : 0, y: lit ? 0 : 10 }}
         tabIndex={lit ? 0 : -1}

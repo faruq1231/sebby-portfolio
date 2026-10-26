@@ -1,0 +1,34 @@
+.name-scene { position: relative; height: 260svh; color: var(--studio-ivory); background: var(--studio-black); }
+.name-scene-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; perspective: 1200px; }
+.scene-field { position: absolute; inset: -5% 0; width: 100%; height: 110%; color: #dedbd2; pointer-events: none; }
+.scene-topline { position: absolute; z-index: 4; top: clamp(105px, 16vh, 155px); left: 0; right: 0; display: flex; justify-content: space-between; gap: 2rem; font-size: .7rem; line-height: 1.8; letter-spacing: .08em; text-transform: uppercase; }
+.scene-topline p { margin: 0; }.scene-topline p span { display: block; color: #8e8f87; font-size: .6rem; letter-spacing: .08em; }
+.scene-location { display: flex; align-items: start; gap: .7rem; color: #a1a297; }.scene-location i { width: 5px; height: 5px; margin-top: .6rem; border-radius: 50%; background: #cbd0bb; box-shadow: 0 0 12px #cbd0bb66; }
+.scene-name-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; transform-style: preserve-3d; }
+.scene-letter-anchor { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1200px; }
+.scene-letter { display: block; font-size: 25vw; font-weight: 900; line-height: .85; letter-spacing: -.07em; -webkit-text-stroke: .8px rgba(244,241,232,.85); text-shadow: 1px 1px #44453d, 3px 3px #2f302a, 5px 5px #24251f, 8px 8px 24px #0008; transform-style: preserve-3d; will-change: transform; }
+.scene-orbits { position: absolute; z-index: 1; width: min(90vw, 88vh); height: min(90vw, 88vh); left: calc(50% - min(45vw, 44vh)); top: calc(50% - min(45vw, 44vh)); color: #d4d7c2; pointer-events: none; }
+.scene-emblem { position: absolute; z-index: 5; width: clamp(140px, 15vw, 205px); top: 50%; left: 50%; translate: -50% -50%; }
+.scene-emblem .hero-stamp { width: 100%; color: var(--studio-ivory); background: #12130f; border-color: #90937d44; box-shadow: 0 0 90px #c6d0ad12; }
+.scene-emblem .stamp-ring { border-color: #d7dcc977; background: transparent; }.scene-emblem .stamp-ring > span { color: #b6bba8; background: #12130f; }
+.scene-emblem .brand-stamp { filter: none; }.scene-emblem .stamp-caption { bottom: .7rem; max-width: 75%; font-size: .42rem; line-height: 1.6; color: #949888; }
+.scene-emblem .stamp-turntable:focus-visible { outline-color: var(--studio-ivory); }
+.scene-intro { position: absolute; z-index: 6; left: 0; right: 0; bottom: clamp(28px, 5vh, 64px); display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+.scene-intro-copy p { margin: 0 0 1rem; font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.5; letter-spacing: -.03em; color: #b8b9ad; }
+.scene-work-link { display: inline-flex; align-items: center; gap: 2.5rem; padding: .8rem 0; min-height: 44px; font-size: .75rem; border-bottom: 1px solid #c5c8b8; }
+.scene-work-link svg { transition: transform .2s; }.scene-work-link:hover svg { transform: translate(3px,-3px); }
+.scene-scroll-hint { display: flex; align-items: center; gap: 1.4rem; padding-bottom: .8rem; font-family: var(--font-geist-mono), monospace; font-size: .55rem; letter-spacing: .08em; text-transform: uppercase; color: #8d9082; }
+.scene-portrait { width: clamp(110px, 11vw, 155px); margin: 0; transform: rotate(5deg); }.scene-portrait img { width: 100%; aspect-ratio: 4/3; height: auto; object-fit: cover; object-position: 50% 38%; filter: grayscale(1); border-radius: 3px; }.scene-portrait figcaption { padding-top: .45rem; font-family: var(--font-geist-mono), monospace; font-size: .48rem; text-align: right; color: #929687; }
+.scene-outro { position: absolute; z-index: 6; bottom: 8vh; left: 0; right: 0; text-align: center; pointer-events: none; }.scene-outro span { color: #969b88; font-size: .75rem; }.scene-outro p { margin: .3rem 0 1rem; font-size: clamp(2rem, 5vw, 5rem); font-weight: 600; letter-spacing: -.07em; line-height: 1; }.scene-outro a { display: inline-flex; padding: 1rem; pointer-events: auto; }
+.scene-rail { position: absolute; right: 18px; top: 50%; z-index: 7; display: grid; gap: .6rem; font-family: var(--font-geist-mono), monospace; font-size: .45rem; color: #939682; }.scene-rail > div { width: 1px; height: 90px; margin: auto; background: #f4f1e822; }.scene-rail i { display: block; width: 1px; height: 100%; background: var(--studio-ivory); transform-origin: top; }
+.name-scene--reduced { height: 100svh; }.name-scene--reduced .name-scene-stage { position: relative; }
+@media (min-width: 1800px) { .scene-letter { font-size: 440px; } }
+@media (max-width: 760px) {
+  .name-scene { height: 180svh; }.scene-topline { top: 115px; font-size: .6rem; }.scene-location { font-size: .5rem; gap: .4rem; }.scene-topline p span { font-size: .5rem; }.scene-letter { font-size: 27vw; text-shadow: 1px 1px #44453d, 2px 2px #292a23, 3px 3px 12px #0008; }
+  .scene-intro { bottom: 38px; gap: 1.5rem; }.scene-intro-copy p { font-size: 1rem; }.scene-work-link { gap: 1.5rem; font-size: .7rem; }.scene-scroll-hint { display: none; }.scene-portrait { width: 90px; }.scene-portrait img { aspect-ratio: 3/4; }.scene-portrait figcaption { font-size: .4rem; }.scene-rail { right: 8px; font-size: .4rem; }.scene-rail > div { height: 60px; }.scene-emblem { width: 140px; }.scene-outro { bottom: 13vh; }.scene-outro p { font-size: 2.6rem; }.scene-orbits { width: 104vw; height: 104vw; left: -2vw; top: calc(50% - 52vw); }
+  .name-scene--reduced { height: 100svh; }
+}
+@media (max-height: 600px) and (min-width: 761px) { .scene-topline { top: 100px; }.scene-letter { font-size: 22vw; }.scene-intro-copy p { font-size: .9rem; margin-bottom: .4rem; }.scene-intro { bottom: 22px; }.scene-portrait { width: 100px; } }
+@media (max-height: 640px) { .scene-name-layer { transform: translateY(4vh) scale(.86); }.scene-orbits { scale: .85; }.scene-emblem { width: 130px; } }
+@media (max-height: 480px) { .scene-topline, .scene-portrait, .scene-scroll-hint, .scene-rail { display: none; }.scene-letter { font-size: min(25vw, 46vh); }.scene-intro { bottom: 12px; }.scene-intro-copy p { font-size: .8rem; line-height: 1.3; margin-bottom: .2rem; }.scene-work-link { padding-block: .5rem; font-size: .65rem; }.scene-outro { bottom: 15px; }.scene-outro p { font-size: 2rem; }.scene-emblem { width: 110px; } }
+@media (prefers-reduced-motion: reduce) { .name-scene { height: 100svh; }.name-scene-stage { position: relative; }.scene-letter { will-change: auto; } }
