@@ -1,11 +1,27 @@
 'use client';
 
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ProjectShelf } from './ProjectShelf';
 
-const projects = [
+interface Project {
+  id: string;
+  name: string;
+  number: string;
+  category: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  imageHeight?: number;
+  successImage?: string;
+  href: string;
+  action: string;
+  status: string;
+}
+
+const projects: Project[] = [
   {
     id: 'masterspred',
     name: 'Masterspred',
@@ -13,7 +29,7 @@ const projects = [
     category: 'Full stack / Community',
     title: 'For the love of the game.',
     description: 'A sports prediction community, built from the interface to the wallet.',
-    image: '/masterspred-desktop.png',
+    image: '/masterspred-tour.png',
     imageAlt: 'The Masterspred website showing public prediction results',
     href: 'https://masterspred.vercel.app',
     action: 'Explore Masterspred',
@@ -26,13 +42,85 @@ const projects = [
     category: 'Marketplace / In progress',
     title: 'Your campus, within reach.',
     description: 'A marketplace I’m building for Edo State University students and local sellers.',
-    image: '/easygrab-desktop.png',
+    image: '/easygrab-tour.png',
     imageAlt: 'The EasyGrab campus marketplace website, currently in development',
     href: 'https://easygrab-opal.vercel.app/',
     action: 'See the work in progress',
     status: 'In development',
   },
+  {
+    id: 'valentine',
+    name: 'Valentine web card',
+    number: '03',
+    category: 'Creative coding / Microsite',
+    title: 'A little love, in code.',
+    description: 'A playful Valentine card with a cheeky question and a celebratory reveal.',
+    image: '/valentine-preview.png',
+    imageAlt: 'The Valentine web card asking Will you be my Valentine',
+    imageHeight: 567,
+    successImage: '/valentine-success.png',
+    href: 'https://faruq1231.github.io/valentine-web-card/',
+    action: 'Open the card',
+    status: 'Live experiment',
+  },
 ];
+
+const clamp = (value: number) => Math.max(0, Math.min(1, value));
+
+function ProjectCard({ project, index, count, progress, pinned, active }: {
+  project: Project;
+  index: number;
+  count: number;
+  progress: MotionValue<number>;
+  pinned: boolean;
+  active: number;
+}) {
+  const local = useTransform(progress, value => value * (count - 1) - index);
+  const approach = useTransform(local, value => clamp(value + 1));
+  const exit = useTransform(local, value => clamp((value - .12) / .74));
+  const x = useTransform(exit, value => `${-120 * value}%`);
+  const rotate = useTransform(local, value => 3 * (1 - clamp(value + 1)) - 13 * clamp((value - .12) / .74));
+  const rotateY = useTransform(exit, value => -12 * value);
+  const opacity = useTransform(local, value => 1 - clamp((value - .64) / .24));
+  const scale = useTransform(approach, value => .93 + value * .07);
+  const y = useTransform(approach, value => 28 * (1 - value));
+  const hidden = pinned && active !== index;
+
+  return (
+    <motion.article
+      id={project.id}
+      className={`project-deck-card project-deck-card--${project.id}`}
+      aria-labelledby={`${project.id}-title`}
+      aria-hidden={hidden || undefined}
+      inert={hidden || undefined}
+      style={{ zIndex: count - index, ...(pinned ? { x, rotate, rotateY, opacity, scale, y } : {}) }}
+    >
+      <div className="project-deck-media">
+        <ProjectShelf
+          id={project.id}
+          name={project.name}
+          image={project.image}
+          imageAlt={project.imageAlt}
+          imageHeight={project.imageHeight}
+          successImage={project.successImage}
+          active={!hidden}
+        />
+      </div>
+      <div className="project-deck-copy">
+        <div className="project-deck-meta"><span>{project.number}</span><span>{project.category}</span></div>
+        <p className="project-deck-name">{project.name}</p>
+        <h3 id={`${project.id}-title`}>{project.title}</h3>
+        <p className="project-deck-description">{project.description}</p>
+        <div className="project-deck-card-bottom">
+          <span className="project-deck-status"><i aria-hidden="true" />{project.status}</span>
+          <a href={project.href} target="_blank" rel="noreferrer" className="project-deck-link" tabIndex={hidden ? -1 : undefined}>
+            {project.action}<ArrowUpRight size={20} aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
 export function ProjectDeck() {
   const section = useRef<HTMLElement>(null);
@@ -43,14 +131,6 @@ export function ProjectDeck() {
   const { scrollYProgress } = useScroll({ target: section, offset: ['start start', 'end end'] });
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: .001 });
 
-  const frontX = useTransform(progress, [0, .2, .83, 1], ['0%', '0%', '-112%', '-120%']);
-  const frontRotate = useTransform(progress, [0, .2, .85, 1], [0, 0, -11, -13]);
-  const frontTilt = useTransform(progress, [0, .2, .85, 1], [0, 0, -12, -12]);
-  const frontOpacity = useTransform(progress, [0, .63, .88, 1], [1, 1, 0, 0]);
-  const backScale = useTransform(progress, [0, .2, .83, 1], [.93, .93, 1, 1]);
-  const backY = useTransform(progress, [0, .2, .83, 1], [28, 28, 0, 0]);
-  const backRotate = useTransform(progress, [0, .2, .83, 1], [3, 3, 0, 0]);
-
   useEffect(() => {
     const query = window.matchMedia('(min-width: 761px) and (min-height: 620px)');
     const update = () => setDesktop(query.matches);
@@ -59,9 +139,9 @@ export function ProjectDeck() {
     return () => query.removeEventListener('change', update);
   }, []);
 
-  useMotionValueEvent(scrollYProgress, 'change', value => {
+  useMotionValueEvent(progress, 'change', value => {
     if (!pinned) return;
-    const next = value >= .52 ? 1 : 0;
+    const next = Math.max(0, Math.min(projects.length - 1, Math.floor(value * (projects.length - 1) + .48)));
     setActive(current => current === next ? current : next);
   });
 
@@ -70,7 +150,8 @@ export function ProjectDeck() {
     if (!element || !pinned) return;
     const top = window.scrollY + element.getBoundingClientRect().top;
     const travel = Math.max(0, element.offsetHeight - window.innerHeight);
-    window.scrollTo({ top: top + travel * (index === 0 ? .08 : .94), behavior });
+    const destination = Math.max(.03, Math.min(.97, index / Math.max(1, projects.length - 1)));
+    window.scrollTo({ top: top + travel * destination, behavior });
   }, [pinned]);
 
   useEffect(() => {
@@ -93,6 +174,7 @@ export function ProjectDeck() {
       ref={section}
       className={`project-deck${pinned ? ' project-deck--pinned' : ''}`}
       aria-labelledby="project-deck-title"
+      style={pinned ? { height: `${100 + 120 * (projects.length - 1)}svh` } : undefined}
     >
       <div className="project-deck-stage">
         <div className="project-deck-heading">
@@ -102,68 +184,21 @@ export function ProjectDeck() {
         </div>
 
         <div className="project-deck-cards">
-          {projects.map((project, index) => {
-            const hidden = pinned && active !== index;
-            return (
-              <motion.article
-                key={project.id}
-                id={project.id}
-                className={`project-deck-card project-deck-card--${project.id}`}
-                aria-labelledby={`${project.id}-title`}
-                aria-hidden={hidden || undefined}
-                inert={hidden || undefined}
-                style={pinned ? index === 0
-                  ? { x: frontX, rotate: frontRotate, rotateY: frontTilt, opacity: frontOpacity }
-                  : { scale: backScale, y: backY, rotate: backRotate }
-                  : undefined}
-              >
-                <div className="project-deck-media">
-                  <div className="project-deck-preview-bar" aria-hidden="true">
-                    <span><i /><i /><i /></span>
-                    <span>{project.name}</span>
-                    <span>↗</span>
-                  </div>
-                  <Image
-                    className="project-deck-image"
-                    src={project.image}
-                    width={1210}
-                    height={560}
-                    sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1180px) 60vw, 767px"
-                    alt={project.imageAlt}
-                  />
-                  {project.id === 'masterspred' && (
-                    <div className="project-deck-phone" aria-hidden="true">
-                      <Image src="/masterspred-showcase.webp" width={910} height={1455} sizes="190px" alt="" className="project-deck-phone-image" />
-                    </div>
-                  )}
-                </div>
-                <div className="project-deck-copy">
-                  <div className="project-deck-meta"><span>{project.number}</span><span>{project.category}</span></div>
-                  <p className="project-deck-name">{project.name}</p>
-                  <h3 id={`${project.id}-title`}>{project.title}</h3>
-                  <p className="project-deck-description">{project.description}</p>
-                  <div className="project-deck-card-bottom">
-                    <span className="project-deck-status"><i aria-hidden="true" />{project.status}</span>
-                    <a href={project.href} target="_blank" rel="noreferrer" className="project-deck-link" tabIndex={hidden ? -1 : undefined}>
-                      {project.action}<ArrowUpRight size={20} aria-hidden="true" />
-                    </a>
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
+          {projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} count={projects.length} progress={progress} pinned={pinned} active={active} />
+          ))}
         </div>
 
         {pinned && (
           <div className="project-deck-navigation">
-            <div className="project-deck-tabs" role="group" aria-label="Choose a project">
+            <fieldset className="project-deck-tabs" aria-label="Choose a project">
               {projects.map((project, index) => (
                 <button key={project.id} type="button" aria-pressed={active === index} aria-controls={project.id} onClick={() => selectProject(index)}>
                   <span>{project.number}</span>{project.name}
                 </button>
               ))}
-            </div>
-            <span className="project-deck-counter" aria-live="polite">0{active + 1} <span>/ 02</span></span>
+            </fieldset>
+            <span className="project-deck-counter" aria-live="polite">{String(active + 1).padStart(2, '0')} <span>/ {String(projects.length).padStart(2, '0')}</span></span>
           </div>
         )}
       </div>

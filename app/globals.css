@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './studio.css';
 @import './project-deck.css';
+@import './project-shelf.css';
 @import './hero-scroll.css';
 
 @theme inline {
