@@ -156,15 +156,33 @@ export function ProjectDeck() {
 
   useEffect(() => {
     if (!pinned) return;
+    let disposed = false;
+    let frame = 0;
     const followHash = () => {
+      if (disposed) return;
       const index = projects.findIndex(project => `#${project.id}` === window.location.hash);
-      if (index >= 0) selectProject(index, 'auto');
+      if (index >= 0) selectProject(index, 'instant');
     };
-    const frame = window.requestAnimationFrame(followHash);
-    window.addEventListener('hashchange', followHash);
+    const scheduleRestore = () => {
+      // Native fragment restoration and font layout can finish after hydration.
+      void document.fonts.ready.then(() => {
+        if (disposed) return;
+        window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(() => {
+          frame = window.requestAnimationFrame(followHash);
+        });
+      });
+    };
+    if (document.readyState === 'complete') scheduleRestore();
+    else window.addEventListener('load', scheduleRestore, { once: true });
+    window.addEventListener('pageshow', scheduleRestore);
+    window.addEventListener('hashchange', scheduleRestore);
     return () => {
+      disposed = true;
       window.cancelAnimationFrame(frame);
-      window.removeEventListener('hashchange', followHash);
+      window.removeEventListener('load', scheduleRestore);
+      window.removeEventListener('pageshow', scheduleRestore);
+      window.removeEventListener('hashchange', scheduleRestore);
     };
   }, [pinned, selectProject]);
 
